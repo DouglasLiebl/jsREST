@@ -22,6 +22,9 @@ export default class User extends Model {
             msg: 'Email inválido.',
           },
         },
+        unique: {
+          msg: 'Email já existente.',
+        },
       },
       hash_password: {
         type: Sequelize.STRING,

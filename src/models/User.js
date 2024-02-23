@@ -43,7 +43,7 @@ export default class User extends Model {
     }, { sequelize, modelName: 'tb_users' });
 
     this.addHook('beforeSave', async (user) => {
-      user.hash_password = await brcypt.hash(user.password, 8);
+      if (user.password) user.hash_password = await brcypt.hash(user.password, 8);
     });
 
     return this;

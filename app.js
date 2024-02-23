@@ -20,7 +20,7 @@ class App {
 
   routes() {
     this.app.use('/', home);
-    this.app.use('/user', user);
+    this.app.use('/', user);
   }
 }
 

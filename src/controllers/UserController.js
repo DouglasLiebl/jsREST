@@ -5,8 +5,9 @@ class UserController {
   async create(req, res) {
     try {
       const newUser = await User.create(req.body);
+      const { id, username, email } = newUser;
 
-      return res.json(newUser);
+      return res.json({ id, username, email });
     } catch (error) {
       return res.status(400).json(
         new StandardError(400, req.method, req.path, error.errors.map((e) => e.message)),
@@ -16,7 +17,7 @@ class UserController {
 
   async index(req, res) {
     try {
-      const users = await User.findAll();
+      const users = await User.findAll({ attributes: ['id', 'username', 'email'] });
 
       return res.json(users);
     } catch (error) {
@@ -28,12 +29,11 @@ class UserController {
 
   async show(req, res) {
     try {
-      const { id } = req.params;
-      const user = await User.findByPk(id);
+      const { id, username, email } = await User.findByPk(req.params.id);
 
-      if (user === null) throw new Error(`Usuário não encontrado com o id: ${id}`);
+      if (username === null) throw new Error(`Usuário não encontrado com o id: ${req.params.id}`);
 
-      return res.json(user);
+      return res.json({ id, username, email });
     } catch (error) {
       console.log(error);
       return res.status(404).json(
@@ -61,11 +61,8 @@ class UserController {
 
   async delete(req, res) {
     try {
-      const { id } = req.params;
-      if (id === null) throw new Error('O id do usuário a ser atualizado deve ser fornecido.');
-
-      const user = await User.findByPk(id);
-      if (user === null) throw new Error(`Usuário não encontrado com o id: ${id}`);
+      const user = await User.findByPk(req.userId);
+      if (user === null) throw new Error(`Usuário não encontrado com o id: ${req.userId}`);
 
       await user.destroy();
       return res.status(200).json({

@@ -4,6 +4,7 @@ import home from './src/routes/home';
 import user from './src/routes/user';
 import './src/database/conn';
 import token from './src/routes/token';
+import student from './src/routes/student';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ class App {
     this.app.use('/', home);
     this.app.use('/', user);
     this.app.use('/', token);
+    this.app.use('/', student);
   }
 }
 

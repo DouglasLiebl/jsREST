@@ -5,6 +5,7 @@ import user from './src/routes/user';
 import './src/database/conn';
 import token from './src/routes/token';
 import student from './src/routes/student';
+import image from './src/routes/image';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ class App {
     this.app.use('/', user);
     this.app.use('/', token);
     this.app.use('/', student);
+    this.app.use('/', image);
   }
 }
 

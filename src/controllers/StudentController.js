@@ -16,7 +16,14 @@ class StudentController {
 
   async index(req, res) {
     try {
-      const students = await Student.findAll();
+      const students = await Student.findAll({
+        attributes: ['id', 'first_name', 'last_name', 'email', 'age'],
+        order: [['id', 'DESC'], [Image, 'id', 'DESC']],
+        include: {
+          model: Image,
+          attributes: ['filename'],
+        },
+      });
 
       return res.json(students);
     } catch (error) {
@@ -28,7 +35,14 @@ class StudentController {
 
   async show(req, res) {
     try {
-      const student = await Student.findByPk(req.params.id);
+      const student = await Student.findByPk(req.params.id, {
+        attributes: ['id', 'first_name', 'last_name', 'email', 'age'],
+        order: [['id', 'DESC'], [Image, 'id', 'DESC']],
+        include: {
+          model: Image,
+          attributes: ['filename'],
+        },
+      });
 
       if (student === null) throw new Error(`Estudante não encontrado com o id: ${req.params.id}`);
 

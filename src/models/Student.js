@@ -47,4 +47,8 @@ export default class Student extends Model {
     }, { sequelize, modelName: 'tb_students' });
     return this;
   }
+
+  static associate(models) {
+    this.hasMany(models.Image, { foreignKey: 'student_id' });
+  }
 }

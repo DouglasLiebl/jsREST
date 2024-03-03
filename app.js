@@ -7,6 +7,9 @@ import token from './src/routes/token';
 import student from './src/routes/student';
 import image from './src/routes/image';
 
+import cors from 'cors';
+import helmet from 'helmet';
+
 dotenv.config();
 
 class App {
@@ -17,6 +20,8 @@ class App {
   }
 
   middlewares() {
+    this.app.use(cors());
+    this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
   }
